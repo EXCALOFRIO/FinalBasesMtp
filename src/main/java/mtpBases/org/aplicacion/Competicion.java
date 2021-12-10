@@ -33,6 +33,7 @@ public class Competicion extends JFrame {
                     Competicion frame = new Competicion();
                     frame.setVisible(true);
                     System.out.println("La competicion se ha iniciado");
+                    frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -50,9 +51,10 @@ public class Competicion extends JFrame {
         contentPane.setLayout(null);
         contentPane.setBackground(Color.GRAY);
         setContentPane(contentPane);
-
         setFocusable(true);
-
+        // Creamos la interfaz para añadir usuarios
+        TextField miCampoTexto = new TextField("INTRODUCE COMANDO");
+        contentPane.add(miCampoTexto);
         // Creamos la barra de Menu
         JMenuBar barraMenu = new JMenuBar();
 

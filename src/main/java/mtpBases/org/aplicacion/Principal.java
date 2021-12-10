@@ -24,7 +24,7 @@ public class Principal extends JFrame {
         public void actionPerformed(ActionEvent e) {
 
             if (e.getSource() == salir)
-                System.exit(0);
+                dispose();
             if (e.getSource() == nuevaCompeticion) {
                 System.out.println("NUEVA COMPETICION");
                 // Competicion competicion = new Competicion();
