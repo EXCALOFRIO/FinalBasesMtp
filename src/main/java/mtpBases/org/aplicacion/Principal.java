@@ -6,7 +6,12 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.awt.image.BufferedImage;
+import java.beans.Statement;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -46,6 +51,7 @@ public class Principal extends JFrame {
                     Principal frame = new Principal();
                     frame.setVisible(true);
                     frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -62,7 +68,7 @@ public class Principal extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
         JPanel contentPane = new JPanel();
-        // contentPane.setBackground(Color.GRAY);
+        contentPane.setBackground(Color.black);
         BufferedImage myPicture = ImageIO.read(new File("./imagenes/fondo.jpg"));
         JLabel picLabel = new JLabel(new ImageIcon(myPicture));
         contentPane.add(picLabel);
