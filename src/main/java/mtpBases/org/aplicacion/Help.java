@@ -3,24 +3,22 @@ package mtpBases.org.aplicacion;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.image.BufferedImage;
-import java.beans.Statement;
-
-import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 import javax.swing.*;
 
-public class Principal extends JFrame {
-    JMenuItem abrir;
+import javax.imageio.ImageIO;
+
+public class Help extends JFrame {
     JMenuItem guardar;
-    JMenuItem cargar;
     JMenuItem salir;
-    JMenuItem nuevaCompeticion;
     JMenuItem helpItem;
     Font producSans = new Font("title", 0, 0);
     Font producSansBold = new Font("title", 0, 0);
@@ -29,22 +27,10 @@ public class Principal extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
             if (e.getSource() == salir)
                 dispose();
-            if (e.getSource() == nuevaCompeticion) {
 
-                // Competicion competicion = new Competicion();
-                Competicion.iniciarCompeticion();
-                System.out.println("NUEVA COMPETICION");
-            }
-            if (e.getSource() == helpItem) {
-                System.out.println("ABRIENDO HELP");
-                // Competicion competicion = new Competicion();
-                Help.help();
-            }
         }
-
     }
 
     private JPanel contentPane;
@@ -52,14 +38,13 @@ public class Principal extends JFrame {
     /**
      * Launch the application.
      */
-    public static void main(String[] args) {
+    public static void help() {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    Principal frame = new Principal();
+                    Help frame = new Help();
                     frame.setVisible(true);
                     frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -72,7 +57,7 @@ public class Principal extends JFrame {
      * 
      * @throws IOException
      */
-    public Principal() throws IOException {
+    public Help() throws IOException {
         // FUENTE
         try {
             // create the font to use. Specify the size!
@@ -93,19 +78,27 @@ public class Principal extends JFrame {
             e.printStackTrace();
         }
 
+        Connection connection = null;
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
         JPanel contentPane = new JPanel();
         contentPane.setBackground(Color.black);
-        BufferedImage myPicture = ImageIO.read(new File("./imagenes/fondo.jpg"));
+        BufferedImage myPicture = ImageIO.read(new File("./imagenes/fondo2.jpg"));
         JLabel picLabel = new JLabel(new ImageIcon(myPicture));
         contentPane.add(picLabel);
         setContentPane(contentPane);
 
-        setFocusable(true);
+        JTextArea textarea = new JTextArea(
+                "ESTE ES EL TEXTO DE AYUDA QUE APARECE CUANDO HACES CLICK EN EL BOTON HELP \nPARA QUE FUNCIONE EL PROGRAMA HACER MAKE RUN POR CONSOLA.\n SI LO QUE QUEREMOS ES CREAR UNA COMPETICION DESDE EL MENU INICIAL HACER CLICK EN EL BOTON NUEVA COMPETICION,\n Y SI LO QUE QUEREMOS ES VER LOS RESULTADOS LE DAMOS AL BOTON DE COMENZAR EN LA PESTAÑA DE NUEVA COMPETICION. \n SI LO QUE QUEREMOS ES SALIR HACER CLIK EN EL BOTON DE SALIR. ");
+        textarea.setBounds(200, 100, 850, 300);
+        textarea.setEditable(false);
+        textarea.setFont(producSans);
 
+        picLabel.add(textarea);
         // Creamos la barra de Menu
         JMenuBar barraMenu = new JMenuBar();
+
         // Creamos los menus y modificamos los accesos rapidos
         JMenu archivo = new JMenu("Archivo");
         archivo.setFont(producSansBold);
@@ -122,30 +115,17 @@ public class Principal extends JFrame {
 
         // Creamos los submenus y modificamos los accesos rapidos
 
-        abrir = new JMenuItem("Abrir");
-        abrir.setFont(producSans);
         guardar = new JMenuItem("Guardar");
         guardar.setFont(producSans);
-        cargar = new JMenuItem("Cargar");
-        cargar.setFont(producSans);
         salir = new JMenuItem("Salir");
         salir.setFont(producSans);
-        nuevaCompeticion = new JMenuItem("Nueva Competicion");
-        nuevaCompeticion.setFont(producSans);
         helpItem = new JMenuItem("Help");
         helpItem.setFont(producSans);
-
         // Añadimos los submenus a los menus
 
-        archivo.add(abrir);
-        archivo.add(new JSeparator());
         archivo.add(guardar);
-        archivo.add(cargar);
         archivo.add(new JSeparator());
         archivo.add(salir);
-
-        crear.add(nuevaCompeticion);
-        crear.add(new JSeparator());
 
         help.add(helpItem);
 
@@ -153,8 +133,6 @@ public class Principal extends JFrame {
         setJMenuBar(barraMenu);
 
         salir.addActionListener(new Funcionalidad());
-        nuevaCompeticion.addActionListener(new Funcionalidad());
         helpItem.addActionListener(new Funcionalidad());
     }
-
 }

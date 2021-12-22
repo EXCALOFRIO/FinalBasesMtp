@@ -12,9 +12,10 @@ import java.util.List;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import javax.swing.*;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
+
 import javax.swing.table.DefaultTableModel;
 
 public class Competicion extends JFrame {
@@ -23,11 +24,26 @@ public class Competicion extends JFrame {
     JMenuItem cargar;
     JMenuItem salir;
     JMenuItem helpItem;
+    JButton boton = new JButton("COMENZAR");
+    Font producSans = new Font("title", 0, 0);
+    Font producSansBold = new Font("title", 0, 0);
 
     private class Funcionalidad implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == salir)
+                dispose();
+            if (e.getSource() == boton) {
+                System.out.println("COMENZANDO");
+                // Competicion competicion = new Competicion();
+                Resultados.generarResultados();
+            }
+            if (e.getSource() == helpItem) {
+                System.out.println("ABRIENDO HELP");
+                // Competicion competicion = new Competicion();
+                Help.help();
+            }
 
         }
     }
@@ -58,6 +74,26 @@ public class Competicion extends JFrame {
      * @throws IOException
      */
     public Competicion() throws IOException {
+        // FUENTE
+        try {
+            // create the font to use. Specify the size!
+            producSans = Font.createFont(Font.TRUETYPE_FONT, new File("fonts\\ProductSansRegular.ttf"))
+                    .deriveFont(15f);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            // register the font
+            ge.registerFont(producSans);
+
+            producSansBold = Font.createFont(Font.TRUETYPE_FONT, new File("fonts\\ProductSansBold.ttf"))
+                    .deriveFont(19f);
+            GraphicsEnvironment ge2 = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            // register the font
+            ge2.registerFont(producSansBold);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (FontFormatException e) {
+            e.printStackTrace();
+        }
+
         // CONECTAR BASE DE DATOS
         Connection connection = null;
         ArrayList<Esgrimista> esgrimistaArray = new ArrayList<Esgrimista>();
@@ -165,17 +201,28 @@ public class Competicion extends JFrame {
 
         // JText CON POULES
         tablePoule1.setBackground(Color.cyan);
-
         tablePoule1.setBounds(10, 10, 600, 170);
+        tablePoule1.setEnabled(false);
+        tablePoule1.setFont(producSans);
 
         tablePoule2.setBackground(Color.orange);
-        tablePoule2.setBounds(650, 350, 600, 170);
+        tablePoule2.setBounds(650, 10, 600, 170);
+        tablePoule2.setEnabled(false);
+        tablePoule2.setFont(producSans);
+
+        boton.setBackground(Color.orange);
+        boton.setBounds(530, 240, 220, 70);
+        boton.setFont(producSansBold);
 
         tablePoule3.setBackground(Color.gray);
-        tablePoule3.setBounds(650, 10, 600, 170);
+        tablePoule3.setBounds(650, 350, 600, 170);
+        tablePoule3.setEnabled(false);
+        tablePoule3.setFont(producSans);
 
         tablePoule4.setBackground(Color.pink);
         tablePoule4.setBounds(10, 350, 600, 170);
+        tablePoule4.setEnabled(false);
+        tablePoule4.setFont(producSans);
 
         JScrollPane scrollPane1 = new JScrollPane();
 
@@ -187,6 +234,7 @@ public class Competicion extends JFrame {
         picLabel.add(scrollPane2);
         picLabel.add(scrollPane3);
         picLabel.add(scrollPane4);
+        picLabel.add(boton);
 
         scrollPane1.setBounds(tablePoule1.getBounds());
         scrollPane2.setBounds(tablePoule2.getBounds());
@@ -211,9 +259,11 @@ public class Competicion extends JFrame {
 
         // Creamos los menus y modificamos los accesos rapidos
         JMenu archivo = new JMenu("Archivo");
+        archivo.setFont(producSansBold);
         JMenu crear = new JMenu("Crear");
+        crear.setFont(producSansBold);
         JMenu help = new JMenu("Help");
-
+        help.setFont(producSansBold);
         // Añadimos los menus a la barra de menu
 
         barraMenu.add(archivo);
@@ -223,12 +273,15 @@ public class Competicion extends JFrame {
         // Creamos los submenus y modificamos los accesos rapidos
 
         abrir = new JMenuItem("Abrir");
+        abrir.setFont(producSans);
         guardar = new JMenuItem("Guardar");
+        guardar.setFont(producSans);
         cargar = new JMenuItem("Cargar");
+        cargar.setFont(producSans);
         salir = new JMenuItem("Salir");
-
+        salir.setFont(producSans);
         helpItem = new JMenuItem("Help");
-
+        helpItem.setFont(producSans);
         // Añadimos los submenus a los menus
 
         archivo.add(abrir);
@@ -244,5 +297,7 @@ public class Competicion extends JFrame {
         setJMenuBar(barraMenu);
 
         salir.addActionListener(new Funcionalidad());
+        boton.addActionListener(new Funcionalidad());
+        helpItem.addActionListener(new Funcionalidad());
     }
 }
