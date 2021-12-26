@@ -33,6 +33,7 @@ public class CompeticionBlancoyNegro extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == salir)
+                DecoradorCompeticion.reset();
                 dispose();
             if (e.getSource() == boton) {
                 System.out.println("COMENZANDO");

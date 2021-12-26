@@ -35,7 +35,13 @@ public class Principal extends JFrame {
             if (e.getSource() == nuevaCompeticion) {
 
                 // Competicion competicion = new Competicion();
-                DecoradorCompeticion.iniciar();
+                try {
+                    DecoradorCompeticion competicion = DecoradorCompeticion.getInstance();
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+                //DecoradorCompeticion.iniciar();
                 System.out.println("NUEVA COMPETICION");
             }
             if (e.getSource() == helpItem) {
@@ -56,9 +62,11 @@ public class Principal extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
+                    
                     Principal frame = new Principal();
                     frame.setVisible(true);
                     frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                    
 
                 } catch (Exception e) {
                     e.printStackTrace();

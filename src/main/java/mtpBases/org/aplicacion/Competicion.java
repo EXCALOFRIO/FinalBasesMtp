@@ -33,7 +33,8 @@ public class Competicion extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == salir)
-                dispose();
+                DecoradorCompeticion.reset();
+            dispose();
             if (e.getSource() == boton) {
                 System.out.println("COMENZANDO");
                 // Competicion competicion = new Competicion();

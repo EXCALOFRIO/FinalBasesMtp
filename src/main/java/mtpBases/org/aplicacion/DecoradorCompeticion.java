@@ -16,6 +16,7 @@ import javax.swing.*;
 
 import javax.imageio.ImageIO;
 
+//CREAMOS ESTA CLASE PARA USAR EL PATRON DE FACHADA 
 public class DecoradorCompeticion extends JFrame {
     JMenuItem guardar;
     JMenuItem salir;
@@ -25,12 +26,31 @@ public class DecoradorCompeticion extends JFrame {
     JButton color;
     JButton blancoYNegro;
 
+    // USAMOS EL PATRON STRATEGY PARA QUE SOLO SE ABRA UNA SOLA COMPETICION
+    private static DecoradorCompeticion competicion;
+
+    public static DecoradorCompeticion getInstance() throws IOException {
+        if (competicion == null) {
+            competicion = new DecoradorCompeticion();
+            iniciar();
+        }
+
+        return competicion;
+    }
+
+    // Para permitir que se abra una sola competicion.
+    public static void reset() {
+
+        competicion = null;
+    }
+
     private class Funcionalidad implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == salir)
-                dispose();
+                reset();
+            dispose();
             if (e.getSource() == color)
                 Competicion.iniciarCompeticion();
             ;
@@ -64,7 +84,7 @@ public class DecoradorCompeticion extends JFrame {
      * 
      * @throws IOException
      */
-    public DecoradorCompeticion() throws IOException {
+    private DecoradorCompeticion() throws IOException {
         // FUENTE
         try {
             // create the font to use. Specify the size!
@@ -149,4 +169,5 @@ public class DecoradorCompeticion extends JFrame {
         color.addActionListener(new Funcionalidad());
         blancoYNegro.addActionListener(new Funcionalidad());
     }
+
 }
